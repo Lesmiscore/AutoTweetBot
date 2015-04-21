@@ -9,8 +9,6 @@ Public Class Form1
     Dim botName As ToolStripItem
     Dim wkState As ToolStripItem
     Dim hideOrShow As ToolStripItem
-    Dim switchExperimental As ToolStripItem
-    Dim experimental As Boolean = False
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         e.Cancel = True
         HideForm()
@@ -19,9 +17,6 @@ Public Class Form1
         If Environment.CommandLine.Contains("Princessin") Then
             HideForm()
             startUpMode = True
-        End If
-        If Environment.CommandLine.Contains("Experimental") Then
-            experimental = True
         End If
         AccountAuthManager.GetAccount(True)
         'TweetWorker.RunWorkerAsync()
@@ -45,12 +40,6 @@ Public Class Form1
                                                                                    SetCurrentVersionRun()
                                                                                End Sub)
         End If
-        If experimental Then
-            switchExperimental = StatusNotifyIcon.ContextMenuStrip.Items.Add("試験運用モード" & IIf(experimental, "OFF", "ON"), Nothing, Sub()
-                                                                                                                                      experimental = Not experimental
-                                                                                                                                      switchExperimental.Text = "試験運用モード" & IIf(experimental, "OFF", "ON")
-                                                                                                                                  End Sub)
-        End If
         StatusNotifyIcon.ContextMenuStrip.Items.Add("終了", Nothing, Sub()
                                                                        If MessageBox.Show("本当に閉じますか？", "質問", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = Windows.Forms.DialogResult.Yes Then
                                                                            Application.Exit()
@@ -66,7 +55,7 @@ Public Class Form1
                 Microsoft.Win32.Registry.CurrentUser.OpenSubKey( _
                 "Software\Microsoft\Windows\CurrentVersion\Run", True)
             '値の名前に製品名、値のデータに実行ファイルのパスを指定し、書き込む
-            regkey.SetValue(Application.ProductName, """" & Application.ExecutablePath & """ ""Princessin""" & IIf(Form1.experimental, " ""Experimental""", ""))
+            regkey.SetValue(Application.ProductName, """" & Application.ExecutablePath & """ ""Princessin""")
             '閉じる
             regkey.Close()
         Catch ex As Exception
@@ -117,7 +106,7 @@ Public Class Form1
         Dim t As New Forms.Timer
         AddHandler t.Tick, Async Sub(sender_ As Object, e_ As EventArgs)
                                Await Task.Run(Sub()
-                                                  If experimental Then
+                                                  If Date.Now.Second = 0 Then
                                                       If checked Then
                                                           SetState("ツイートを処理しています。")
                                                           Try
@@ -130,35 +119,16 @@ Public Class Form1
                                                               Next
                                                           Catch
                                                           End Try
+                                                          checked = False
                                                       Else
                                                           SetState("次の0秒まで待機しています。")
                                                       End If
-                                                      checked = Not checked
+                                                  ElseIf Date.Now.Second = 59 Then
+                                                      SetState("お待ち下さい。")
+                                                      UpdateQueue()
+                                                      checked = True
                                                   Else
-                                                      If Date.Now.Second = 0 Then
-                                                          If checked Then
-                                                              SetState("ツイートを処理しています。")
-                                                              Try
-                                                                  For Each i In arr
-                                                                      If i Is Nothing Then
-                                                                          Continue For
-                                                                      Else
-                                                                          i.CheckTimeAndTweet()
-                                                                      End If
-                                                                  Next
-                                                              Catch
-                                                              End Try
-                                                              checked = False
-                                                          Else
-                                                              SetState("次の0秒まで待機しています。")
-                                                          End If
-                                                      ElseIf Date.Now.Second = 59 Then
-                                                          SetState("お待ち下さい。")
-                                                          UpdateQueue()
-                                                          checked = True
-                                                      Else
-                                                          SetState("次の0秒まで待機しています。")
-                                                      End If
+                                                      SetState("次の0秒まで待機しています。")
                                                   End If
                                                   SetSeconds(Date.Now.Second)
                                               End Sub)
@@ -212,9 +182,4 @@ Public Class Form1
     Private Sub StatusNotifyIcon_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles StatusNotifyIcon.MouseDoubleClick
         ShowForm()
     End Sub
-    Protected Friend ReadOnly Property ExperientalMode As Boolean
-        Get
-            Return experimental
-        End Get
-    End Property
 End Class

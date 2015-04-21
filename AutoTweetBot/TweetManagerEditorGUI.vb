@@ -28,7 +28,7 @@
         End If
         Dim date_ As Date = TweetDatePicker.Value
         Dim time_ As Date = TweetTimePicker.Value
-        Dim tt As Date = IIf(Form1.ExperientalMode, New Date(date_.Year, date_.Month, date_.Day, time_.Hour, time_.Minute, time_.Second), New Date(date_.Year, date_.Month, date_.Day, time_.Hour, time_.Minute, 0))
+        Dim tt As Date = New Date(date_.Year, date_.Month, date_.Day, time_.Hour, time_.Minute, 0)
         If tm Is Nothing Then
             tm = New TweetManager(tt)
         Else
