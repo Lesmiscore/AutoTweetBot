@@ -3,6 +3,8 @@ Imports System.Drawing.Imaging
 Imports System.Text
 
 Public Class TweetManager
+    Dim additionalDic = New SortedDictionary(Of String, String)
+
     Public Shared Function Open() As TweetManager()
         Dim tmp = Path.Combine(My.Application.Info.DirectoryPath, "Tweets")
         MakeFolder(tmp)
@@ -13,7 +15,7 @@ Public Class TweetManager
                 Continue For
             End If
             tm = tm.Concat({pd}).ToArray
-            Next
+        Next
         Return tm
     End Function
     Public Shared ReadOnly Property SandBox As TweetManager
@@ -45,6 +47,7 @@ Public Class TweetManager
         For Each i In xd.<Tweet>.<Pictures>
             tm.AddPicture(Convert.FromBase64String(i.Value))
         Next
+
         Return tm
         'Catch
         '    Dim tm As New TweetManager(Date.UtcNow)
@@ -53,6 +56,9 @@ Public Class TweetManager
         '    Return Nothing
         'End Try
     End Function
+    Public Overridable Sub AdditionalInfo(dic As IDictionary(Of String, String))
+
+    End Sub
     Private Shared Sub MakeFolder(path As String)
         If Not Directory.Exists(path) Then
             Directory.CreateDirectory(path)
@@ -104,6 +110,17 @@ Public Class TweetManager
                 parent.Add(pn)
             Next
         End If
+        Dim additional = <Additional></Additional>
+        AdditionalInfo(additionalDic)
+        For Each i In additionalDic
+            additional.Add((Function() As XElement
+                                Dim s = "<" + i.Key + ">" + i.Value + "</" + i.Key + ">"
+                                Dim n = XDocument.Parse(s).FirstNode
+                                n.Remove()
+                                Return n
+                            End Function)())
+        Next
+        parent.Add(additional)
         MakeFolder(Path.GetDirectoryName(tmp))
         Using fs As New FileStream(tmp, FileMode.Create, FileAccess.Write)
             Using sr As New StreamWriter(fs, New UTF8Encoding, 8)
@@ -113,7 +130,9 @@ Public Class TweetManager
         Return Me
     End Function
     Public Overridable Function CheckTimeAndTweet() As TweetManager
-        If time < Date.Now Then
+        If time = Date.MinValue Then
+            '無視
+        ElseIf time < Date.Now Then
             Try
                 Dim token = AccountAuthManager.GetAccount(True)
                 Dim status = token.Statuses

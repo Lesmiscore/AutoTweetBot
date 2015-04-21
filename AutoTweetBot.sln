@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AutoTweetBot", "AutoTweetBot\AutoTweetBot.vbproj", "{A14464C9-5952-4859-A769-95DDF2E801BF}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AutoTweetBotPluginsAPI", "AutoTweetBotPluginsAPI\AutoTweetBotPluginsAPI.vbproj", "{755ED809-47AF-444B-9AB7-CA058ADFB894}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A14464C9-5952-4859-A769-95DDF2E801BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A14464C9-5952-4859-A769-95DDF2E801BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A14464C9-5952-4859-A769-95DDF2E801BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{755ED809-47AF-444B-9AB7-CA058ADFB894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{755ED809-47AF-444B-9AB7-CA058ADFB894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{755ED809-47AF-444B-9AB7-CA058ADFB894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{755ED809-47AF-444B-9AB7-CA058ADFB894}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
