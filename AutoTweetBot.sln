@@ -7,6 +7,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AutoTweetBot", "AutoTweetBo
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AutoTweetBotPluginsAPI", "AutoTweetBotPluginsAPI\AutoTweetBotPluginsAPI.vbproj", "{755ED809-47AF-444B-9AB7-CA058ADFB894}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AutoTweetBotCommon", "AutoTweetBotCommon\AutoTweetBotCommon.vbproj", "{235D3122-4E69-42E7-9685-1CBFEE4388B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{755ED809-47AF-444B-9AB7-CA058ADFB894}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{755ED809-47AF-444B-9AB7-CA058ADFB894}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{755ED809-47AF-444B-9AB7-CA058ADFB894}.Release|Any CPU.Build.0 = Release|Any CPU
+		{235D3122-4E69-42E7-9685-1CBFEE4388B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{235D3122-4E69-42E7-9685-1CBFEE4388B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{235D3122-4E69-42E7-9685-1CBFEE4388B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{235D3122-4E69-42E7-9685-1CBFEE4388B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

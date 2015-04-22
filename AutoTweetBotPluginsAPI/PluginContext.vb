@@ -11,6 +11,6 @@
         End Get
     End Property
     Public Function CreateTweet() As PluginTweetManager
-        Return New PluginTweetManager
+        Return New PluginTweetManager(Me)
     End Function
 End Class
