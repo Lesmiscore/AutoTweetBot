@@ -102,9 +102,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoTweetBot\AutoTweetBot.vbproj">
-      <Project>{a14464c9-5952-4859-a769-95ddf2e801bf}</Project>
-      <Name>AutoTweetBot</Name>
+    <ProjectReference Include="..\AutoTweetBotCommon\AutoTweetBotCommon.vbproj">
+      <Project>{235d3122-4e69-42e7-9685-1cbfee4388b9}</Project>
+      <Name>AutoTweetBotCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
