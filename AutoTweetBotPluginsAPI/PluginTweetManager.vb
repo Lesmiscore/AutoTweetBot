@@ -1,7 +1,8 @@
 ﻿Public Class PluginTweetManager
     Inherits TweetManager
-    Public Sub New()
+    Dim plgctx As PluginContext
+    Private Sub New(plgctx As PluginContext)
         MyBase.New(Date.Now)
-
+        Me.plgctx = plgctx
     End Sub
 End Class
