@@ -3,20 +3,20 @@ Imports System.Drawing.Imaging
 Imports System.Text
 
 Public Class Tweet
-    Dim additionalDic = New SortedDictionary(Of String, String)
+    Dim additionalDic As New SortedDictionary(Of String, String)
 
     Public Shared Function Open() As Tweet()
         Dim tmp = Path.Combine(My.Application.Info.DirectoryPath, "Tweets")
         MakeFolder(tmp)
-        Dim tm As Tweet() = New Tweet(-1) {}
+        Dim tm As New List(Of Tweet)
         For Each i In Directory.GetFiles(tmp)
             Dim pd = Parse(i)
             If pd Is Nothing Then
                 Continue For
             End If
-            tm = tm.Concat({pd}).ToArray
+            tm.Add(pd)
         Next
-        Return tm
+        Return tm.ToArray
     End Function
     Public Shared ReadOnly Property SandBox As Tweet
         Get
@@ -47,7 +47,9 @@ Public Class Tweet
         For Each i In xd.<Tweet>.<Pictures>
             tm.AddPicture(Convert.FromBase64String(i.Value))
         Next
-
+        For Each i In xd.<Tweet>.<Additional>
+            tm.additionalDic(i.Name.LocalName) = i.Value
+        Next
         Return tm
         'Catch
         '    Dim tm As New TweetManager(Date.UtcNow)
@@ -56,7 +58,39 @@ Public Class Tweet
         '    Return Nothing
         'End Try
     End Function
-    Public Overridable Sub AdditionalInfo(dic As IDictionary(Of String, String))
+    Private Shared Function ParsePlugin(s As String, factory As Func(Of Date, Tweet)) As Tweet
+        'Try
+        Dim xd = XDocument.Parse(File.ReadAllText(s))
+        Dim time = Date.Parse(xd.<Tweet>.<TimeStamp>.Value)
+        Dim tm As Tweet = factory(time)
+        Dim multiLine As Boolean = False
+        Try
+            multiLine = Boolean.Parse(xd.<Tweet>.<Text>.@multiLine)
+        Catch ex As Exception
+            multiLine = False
+        End Try
+        If multiLine Then
+            Dim sb As New StringBuilder
+            For Each i In xd.<Tweet>.<Text>.<Line>
+                sb.AppendLine(i.Value)
+            Next
+            tm.text = sb.ToString
+        Else
+            tm.text = xd.<Tweet>.<Text>.Value
+        End If
+        tm.detectInfo = Path.GetFileNameWithoutExtension(s)
+        For Each i In xd.<Tweet>.<Pictures>
+            tm.AddPicture(Convert.FromBase64String(i.Value))
+        Next
+        For Each i In xd.<Tweet>.<Additional>
+            tm.additionalDic(i.Name.LocalName) = i.Value
+        Next
+        Return tm
+    End Function
+    Public Overridable Sub SaveAdditionalInfo(dic As IDictionary(Of String, String))
+
+    End Sub
+    Public Overridable Sub LoadedAdditionalInfo(dic As IDictionary(Of String, String))
 
     End Sub
     Private Shared Sub MakeFolder(path As String)
@@ -66,9 +100,9 @@ Public Class Tweet
     End Sub
     Private text, detectInfo As String
     Private time As Date
-    Private pictures As Bitmap()
+    Private pictures As List(Of Bitmap)
     Public Sub New(tweetTime As Date)
-        pictures = New Bitmap(-1) {}
+        pictures = New List(Of Bitmap)
         time = tweetTime
         text = ""
     End Sub
@@ -111,7 +145,7 @@ Public Class Tweet
             Next
         End If
         Dim additional = <Additional></Additional>
-        AdditionalInfo(additionalDic)
+        SaveAdditionalInfo(additionalDic)
         For Each i In additionalDic
             additional.Add((Function() As XElement
                                 Dim s = "<" + i.Key + ">" + i.Value + "</" + i.Key + ">"
@@ -139,8 +173,8 @@ Public Class Tweet
                 If Not AvaliablePicture Then
                     status.Update(New With {.status = ToSafeString(text)})
                 Else
-                    Dim ids As Long() = New Long(pictures.Length - 1) {}
-                    For i = 0 To pictures.Length - 1
+                    Dim ids As Long() = New Long(pictures.Count - 1) {}
+                    For i = 0 To pictures.Count - 1
                         Dim files = Path.GetTempFileName
                         pictures(i).Save(files, ImageFormat.Png)
                         ids(i) = token.Media.Upload(New With {.media = files}).MediaId
@@ -205,7 +239,7 @@ Public Class Tweet
     End Function
     Public ReadOnly Property AvaliablePicture As Boolean
         Get
-            Return pictures.Length <> 0
+            Return pictures.Count <> 0
         End Get
     End Property
     Public Function AddPicture(path As String) As Tweet
@@ -218,7 +252,7 @@ Public Class Tweet
         Return AddPicture(Bitmap.FromStream(stream))
     End Function
     Public Function AddPicture(bmp As Bitmap) As Tweet
-        pictures = pictures.Concat({bmp}).ToArray
+        pictures.Add(bmp)
         Return Me
     End Function
     Public Class NullTweetManager

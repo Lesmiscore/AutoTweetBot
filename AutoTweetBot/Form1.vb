@@ -2,7 +2,7 @@
 Imports System.Windows
 
 Public Class Form1
-    Dim arr As Tweet()
+    Dim arr As List(Of Tweet)
     Dim startUpMode As Boolean = False
     Dim hidden As Boolean = False
     Dim checked As Boolean = False
@@ -85,7 +85,7 @@ Public Class Form1
         hidden = False
     End Sub
     Private Sub UpdateQueue()
-        arr = (From i In Tweet.Open Where i IsNot Nothing).ToArray
+        arr.RemoveAll(Function(i) i Is Nothing)
         Invoke(Sub()
                    AutoTweetList.Items.Clear()
                End Sub)
