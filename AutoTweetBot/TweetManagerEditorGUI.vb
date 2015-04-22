@@ -1,5 +1,5 @@
 ﻿Public Class TweetManagerEditorGUI
-    Dim tm As TweetManager
+    Dim tm As Tweet
     Private Sub TweetManagerEditorGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If tm Is Nothing Then
             Return
@@ -8,7 +8,7 @@
         TweetDatePicker.Value = tm.TweetTime
         TweetTimePicker.Value = tm.TweetTime
     End Sub
-    Public Function StartEdit(Optional ByRef tm As TweetManager = Nothing) As TweetManager
+    Public Function StartEdit(Optional ByRef tm As Tweet = Nothing) As Tweet
         Me.tm = tm
         Me.ShowDialog()
         tm = Me.tm
@@ -30,7 +30,7 @@
         Dim time_ As Date = TweetTimePicker.Value
         Dim tt As Date = IIf(Form1.ExperientalMode, New Date(date_.Year, date_.Month, date_.Day, time_.Hour, time_.Minute, time_.Second), New Date(date_.Year, date_.Month, date_.Day, time_.Hour, time_.Minute, 0))
         If tm Is Nothing Then
-            tm = New TweetManager(tt)
+            tm = New Tweet(tt)
         Else
             tm.TweetTime = tt
         End If
@@ -44,7 +44,7 @@
         Return ToSafeString(TweetTextBox.Text)
     End Function
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles DestroyTweet.Click
-        tm = New TweetManager.NullTweetManager.NullTweetManager()
+        tm = New Tweet.NullTweetManager.NullTweetManager()
         Me.Close()
     End Sub
 End Class
