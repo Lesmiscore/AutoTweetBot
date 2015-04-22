@@ -64,6 +64,7 @@
     <Import Include="System.Diagnostics" />
     <Import Include="System.Drawing" />
     <Import Include="System.Drawing.Imaging" />
+    <Import Include="System.IO" />
     <Import Include="System.Linq" />
     <Import Include="System.Windows" />
     <Import Include="System.Windows.Forms" />
@@ -96,6 +97,7 @@
     </Compile>
     <Compile Include="SettingsManager.vb" />
     <Compile Include="Tweet.vb" />
+    <Compile Include="TweetManager.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="LoginForm.resx">
