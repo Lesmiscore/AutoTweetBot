@@ -1,5 +1,5 @@
 ﻿Public Class PluginTweetManager
-    Inherits Tweet
+    Inherits TweetManager
     Dim plgctx As PluginContext
     Friend Sub New(plgctx As PluginContext)
         MyBase.New(Date.MinValue)
