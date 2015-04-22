@@ -2,13 +2,13 @@
 Imports System.Drawing.Imaging
 Imports System.Text
 
-Public Class TweetManager
+Public Class Tweet
     Dim additionalDic = New SortedDictionary(Of String, String)
 
-    Public Shared Function Open() As TweetManager()
+    Public Shared Function Open() As Tweet()
         Dim tmp = Path.Combine(My.Application.Info.DirectoryPath, "Tweets")
         MakeFolder(tmp)
-        Dim tm As TweetManager() = New TweetManager(-1) {}
+        Dim tm As Tweet() = New Tweet(-1) {}
         For Each i In Directory.GetFiles(tmp)
             Dim pd = Parse(i)
             If pd Is Nothing Then
@@ -18,16 +18,16 @@ Public Class TweetManager
         Next
         Return tm
     End Function
-    Public Shared ReadOnly Property SandBox As TweetManager
+    Public Shared ReadOnly Property SandBox As Tweet
         Get
-            Return New TweetManager(Date.Now)
+            Return New Tweet(Date.Now)
         End Get
     End Property
-    Private Shared Function Parse(s As String) As TweetManager
+    Private Shared Function Parse(s As String) As Tweet
         'Try
         Dim xd = XDocument.Parse(File.ReadAllText(s))
         Dim time = Date.Parse(xd.<Tweet>.<TimeStamp>.Value)
-        Dim tm As New TweetManager(time)
+        Dim tm As New Tweet(time)
         Dim multiLine As Boolean = False
         Try
             multiLine = Boolean.Parse(xd.<Tweet>.<Text>.@multiLine)
@@ -72,7 +72,7 @@ Public Class TweetManager
         time = tweetTime
         text = ""
     End Sub
-    Public Overridable Function Save() As TweetManager
+    Public Overridable Function Save() As Tweet
         Dim tmp = Path.Combine(My.Application.Info.DirectoryPath, "Tweets", InstanceSearchInfo) & ".xml"
         Dim parent = <Tweet></Tweet>
         Dim text = <Text></Text>
@@ -129,7 +129,7 @@ Public Class TweetManager
         End Using
         Return Me
     End Function
-    Public Overridable Function CheckTimeAndTweet() As TweetManager
+    Public Overridable Function CheckTimeAndTweet() As Tweet
         If time = Date.MinValue Then
             '無視
         ElseIf time < Date.Now Then
@@ -208,28 +208,28 @@ Public Class TweetManager
             Return pictures.Length <> 0
         End Get
     End Property
-    Public Function AddPicture(path As String) As TweetManager
+    Public Function AddPicture(path As String) As Tweet
         Return AddPicture(New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
     End Function
-    Public Function AddPicture(bytes As Byte()) As TweetManager
+    Public Function AddPicture(bytes As Byte()) As Tweet
         Return AddPicture(New MemoryStream(bytes, False))
     End Function
-    Public Function AddPicture(stream As Stream) As TweetManager
+    Public Function AddPicture(stream As Stream) As Tweet
         Return AddPicture(Bitmap.FromStream(stream))
     End Function
-    Public Function AddPicture(bmp As Bitmap) As TweetManager
+    Public Function AddPicture(bmp As Bitmap) As Tweet
         pictures = pictures.Concat({bmp}).ToArray
         Return Me
     End Function
     Public Class NullTweetManager
-        Inherits TweetManager
+        Inherits Tweet
         Public Sub New()
             MyBase.New(Date.Now)
         End Sub
-        Public Overrides Function Save() As TweetManager
+        Public Overrides Function Save() As Tweet
             Return Me
         End Function
-        Public Overrides Function CheckTimeAndTweet() As TweetManager
+        Public Overrides Function CheckTimeAndTweet() As Tweet
             Return Me
         End Function
     End Class

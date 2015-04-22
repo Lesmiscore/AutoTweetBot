@@ -95,7 +95,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SettingsManager.vb" />
-    <Compile Include="TweetManager.vb" />
+    <Compile Include="Tweet.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="LoginForm.resx">

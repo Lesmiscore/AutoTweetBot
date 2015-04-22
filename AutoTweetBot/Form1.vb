@@ -2,7 +2,7 @@
 Imports System.Windows
 
 Public Class Form1
-    Dim arr As TweetManager()
+    Dim arr As Tweet()
     Dim startUpMode As Boolean = False
     Dim hidden As Boolean = False
     Dim checked As Boolean = False
@@ -85,7 +85,7 @@ Public Class Form1
         hidden = False
     End Sub
     Private Sub UpdateQueue()
-        arr = (From i In TweetManager.Open Where i IsNot Nothing).ToArray
+        arr = (From i In Tweet.Open Where i IsNot Nothing).ToArray
         Invoke(Sub()
                    AutoTweetList.Items.Clear()
                End Sub)
@@ -170,7 +170,7 @@ Public Class Form1
         TweetWorker.RunWorkerAsync()
     End Sub
     Private Sub MakeReservation_Click(sender As Object, e As EventArgs) Handles MakeReservation.Click
-        TweetManagerEditorGUI.StartEdit(TweetManager.SandBox).Save()
+        TweetManagerEditorGUI.StartEdit(Tweet.SandBox).Save()
         UpdateQueue()
     End Sub
     Private Sub EditReservation_Click(sender As Object, e As EventArgs) Handles EditReservation.Click
@@ -182,7 +182,7 @@ Public Class Form1
             Return
         End Try
         Dim isi = item.SubItems(3).Text
-        Dim tm As TweetManager = Nothing
+        Dim tm As Tweet = Nothing
         For Each i In arr
             If i.InstanceSearchInfo = isi Then
                 tm = i
@@ -200,7 +200,7 @@ Public Class Form1
             Return
         End Try
         Dim isi = item.SubItems(3).Text
-        Dim tm As TweetManager = Nothing
+        Dim tm As Tweet = Nothing
         For Each i In arr
             If i.InstanceSearchInfo = isi Then
                 tm = i
