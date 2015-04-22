@@ -1,4 +1,5 @@
 ﻿Public MustInherit Class PluginInfo
+    Dim ctx As New PluginContext(Me)
     ''' <summary>
     ''' プラグインの名前を取得します。
     ''' </summary>
@@ -14,4 +15,9 @@
     ''' <remarks></remarks>
     Public MustOverride ReadOnly Property PluginClasses As Type()
     Public MustOverride Sub SendTime(plgctx As PluginContext)
+    Public ReadOnly Property Context As PluginContext
+        Get
+
+        End Get
+    End Property
 End Class

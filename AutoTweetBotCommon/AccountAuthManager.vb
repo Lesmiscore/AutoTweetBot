@@ -2,8 +2,8 @@
 Imports System.Threading
 
 Public Class AccountAuthManager
-    Private Const consumerKey = "jRJyQ12Kc0yDM20Lg6VlcBoBg"
-    Private Const consumerSecret = "nZRhSrJT9vWzv9kyqi3MfPxMsaAKETXf6v7gfNGLTOjQCpjuyg"
+    Private Shared ReadOnly consumerKey As String = "jRJyQ12Kc0yDM20Lg6VlcBoBg"
+    Private Shared ReadOnly consumerSecret As String = "nZRhSrJT9vWzv9kyqi3MfPxMsaAKETXf6v7gfNGLTOjQCpjuyg"
     Public Shared Function GetAccount(allowDialog As Boolean) As Tokens
         Dim sm = SettingsManager.Open
         If Not sm.IsAuthencated Then

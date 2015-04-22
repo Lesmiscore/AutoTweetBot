@@ -1,13 +1,18 @@
 ﻿Public NotInheritable Class PluginContext
-    Dim name As String
+    Private pi As PluginInfo
+
+    Protected Sub New(pi As PluginInfo)
+        Me.pi = pi
+    End Sub
+
     Public ReadOnly Property PluginName As String
         Get
-            Return name
+            Return pi.PluginName
         End Get
     End Property
     Public ReadOnly Property InternalIdenfier As String
         Get
-            Return name.Where(Function(i) Not (vbCrLf + " " + Path.DirectorySeparatorChar + Path.GetInvalidPathChars + Path.GetInvalidFileNameChars + Path.PathSeparator).Contains(i))
+            Return PluginName.Where(Function(i) Not (vbCrLf + " " + Path.DirectorySeparatorChar + Path.GetInvalidPathChars + Path.GetInvalidFileNameChars + Path.PathSeparator).Contains(i))
         End Get
     End Property
     Public Function CreateTweet() As PluginTweetManager

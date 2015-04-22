@@ -47,18 +47,9 @@ Public Class Tweet
         For Each i In xd.<Tweet>.<Pictures>
             tm.AddPicture(Convert.FromBase64String(i.Value))
         Next
-        For Each i In xd.<Tweet>.<Additional>
-            tm.additionalDic(i.Name.LocalName) = i.Value
-        Next
         Return tm
-        'Catch
-        '    Dim tm As New TweetManager(Date.UtcNow)
-        '    tm.detectInfo = Path.GetFileNameWithoutExtension(s)
-        '    tm.Delete()
-        '    Return Nothing
-        'End Try
     End Function
-    Private Shared Function ParsePlugin(s As String, factory As Func(Of Date, Tweet)) As Tweet
+    Protected Friend Shared Function ParsePlugin(s As String, factory As Func(Of Date, Tweet)) As Tweet
         'Try
         Dim xd = XDocument.Parse(File.ReadAllText(s))
         Dim time = Date.Parse(xd.<Tweet>.<TimeStamp>.Value)
@@ -85,6 +76,7 @@ Public Class Tweet
         For Each i In xd.<Tweet>.<Additional>
             tm.additionalDic(i.Name.LocalName) = i.Value
         Next
+        tm.LoadedAdditionalInfo(tm.additionalDic)
         Return tm
     End Function
     Public Overridable Sub SaveAdditionalInfo(dic As IDictionary(Of String, String))
