@@ -208,6 +208,19 @@ Public Class Tweet
             time = value
         End Set
     End Property
+    Public Property TweetDate As Date
+        Get
+            Return time
+        End Get
+        Set(value As Date)
+            time = value
+        End Set
+    End Property
+    Public ReadOnly Property IsDisabled As Boolean
+        Get
+            Return time = Date.MinValue
+        End Get
+    End Property
     Public ReadOnly Property InstanceSearchInfo As String
         Get
             If detectInfo = Nothing OrElse detectInfo = "" OrElse detectInfo.Length <> 30 Then

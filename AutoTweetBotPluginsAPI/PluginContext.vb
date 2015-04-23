@@ -15,7 +15,7 @@
             Return PluginName.Where(Function(i) Not (vbCrLf + " " + Path.DirectorySeparatorChar + Path.GetInvalidPathChars + Path.GetInvalidFileNameChars + Path.PathSeparator).Contains(i))
         End Get
     End Property
-    Public Function CreateTweet() As PluginTweetManager
-        Return New PluginTweetManager(Me)
+    Public Function CreateTweet() As PluginTweet
+        Return New PluginTweet(Me)
     End Function
 End Class
