@@ -10,4 +10,9 @@ Public Interface IBackgroundThread
     ''' <param name="plgctx"></param>
     ''' <remarks></remarks>
     Sub DoWork(plgctx As PluginContext)
+    ''' <summary>
+    ''' バックグラウンドスレッドが終了することを予告します。
+    ''' </summary>
+    ''' <remarks></remarks>
+    Sub NotifyStop()
 End Interface

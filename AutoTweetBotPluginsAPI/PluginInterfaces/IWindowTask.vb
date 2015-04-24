@@ -16,4 +16,11 @@ Public Interface IWindowTask
     ''' </summary>
     ''' <remarks></remarks>
     Sub CloseWindow()
+    ''' <summary>
+    ''' ウィンドウが開いているか確認します。
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    ReadOnly Property IsWindowOpened As Boolean
 End Interface
