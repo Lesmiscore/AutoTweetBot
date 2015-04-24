@@ -3,7 +3,7 @@
 ''' </summary>
 ''' <remarks></remarks>
 Public Interface IEditorWindow
-    Inherits IPluginBase
+    Inherits IWindowBase
     ''' <summary>
     ''' ツイートを編集するウィンドウを開きます
     ''' </summary>
@@ -11,9 +11,4 @@ Public Interface IEditorWindow
     ''' <param name="plgctx"></param>
     ''' <remarks></remarks>
     Sub OpenEditor(tweet As Tweet, plgctx As PluginContext)
-    ''' <summary>
-    ''' 編集をキャンセルし、ウィンドウを閉じることを通知します。
-    ''' </summary>
-    ''' <remarks></remarks>
-    Sub NotifyCancel()
 End Interface

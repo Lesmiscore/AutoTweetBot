@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="PluginInterfaces\IEditorWindow.vb" />
     <Compile Include="PluginInterfaces\IPluginBase.vb" />
+    <Compile Include="PluginInterfaces\IWindowBase.vb" />
     <Compile Include="PluginInterfaces\IWindowTask.vb" />
     <Compile Include="PluginInterfaces\IBackgroundThread.vb" />
     <Compile Include="PluginTweet.vb" />
