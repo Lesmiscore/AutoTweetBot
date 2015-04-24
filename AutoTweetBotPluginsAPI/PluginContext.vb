@@ -1,7 +1,7 @@
 ﻿Public NotInheritable Class PluginContext
     Private pi As PluginInfo
 
-    Protected Sub New(pi As PluginInfo)
+    Protected Friend Sub New(pi As PluginInfo)
         Me.pi = pi
     End Sub
 

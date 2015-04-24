@@ -67,6 +67,7 @@
     <Import Include="System.Data" />
     <Import Include="System.Drawing" />
     <Import Include="System.Diagnostics" />
+    <Import Include="System.IO" />
     <Import Include="System.Windows.Forms" />
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
@@ -95,6 +96,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="PluginLoader.vb" />
     <Compile Include="TweetManagerEditorGUI.Designer.vb">
       <DependentUpon>TweetManagerEditorGUI.vb</DependentUpon>
     </Compile>
@@ -135,6 +137,10 @@
     <ProjectReference Include="..\AutoTweetBotCommon\AutoTweetBotCommon.vbproj">
       <Project>{235d3122-4e69-42e7-9685-1cbfee4388b9}</Project>
       <Name>AutoTweetBotCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoTweetBotPluginsAPI\AutoTweetBotPluginsAPI.vbproj">
+      <Project>{755ed809-47af-444b-9ab7-ca058adfb894}</Project>
+      <Name>AutoTweetBotPluginsAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
