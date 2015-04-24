@@ -16,9 +16,15 @@ Public Class TweetManager
             RegisterTweet(tweet)
         Next
     End Sub
+    Protected Friend Sub UnregisterTweet(tweet As Tweet)
+        tweets.Remove(tweet)
+    End Sub
     Public Sub CheckTimeAndTweet()
         For Each i In tweets
             i.CheckTimeAndTweet()
         Next
     End Sub
+    Public Function GetTweets() As Tweet()
+        Return tweets.ToArray
+    End Function
 End Class
