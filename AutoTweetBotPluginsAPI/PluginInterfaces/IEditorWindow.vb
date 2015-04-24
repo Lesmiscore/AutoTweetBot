@@ -3,7 +3,7 @@
 ''' </summary>
 ''' <remarks></remarks>
 Public Interface IEditorWindow
-    Inherits IDisposable, IPluginBase
+    Inherits IPluginBase
     ''' <summary>
     ''' ツイートを編集するウィンドウを開きます
     ''' </summary>

@@ -3,7 +3,7 @@
 ''' </summary>
 ''' <remarks></remarks>
 Public Interface IWindowTask
-    Inherits IDisposable, IPluginBase
+    Inherits IPluginBase
     ''' <summary>
     ''' ウィンドウを開きます
     ''' </summary>

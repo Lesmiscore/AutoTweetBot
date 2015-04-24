@@ -3,7 +3,7 @@
 ''' </summary>
 ''' <remarks></remarks>
 Public Interface IBackgroundThread
-    Inherits IDisposable, IPluginBase
+    Inherits IPluginBase
     ''' <summary>
     ''' バックグラウンドで実行する処理
     ''' </summary>
